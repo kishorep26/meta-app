@@ -15,9 +15,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
- *StudentDAOImpl  class for StudentDAO interface.
+ * StudentDAOImpl class for StudentDAO interface.
  *
  * @author TrainingInstitute
  * @since 2021-10-08
@@ -26,9 +25,9 @@ import org.slf4j.LoggerFactory;
 public class StudentDAOImpl implements StudentDAO {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(StudentDAO.class);
-  
+
   @Override
-public boolean addNewStudent(Student student) throws DAOException {
+  public boolean addNewStudent(Student student) throws DAOException {
     LOGGER.trace("Executing addNewStudent");
     boolean b = false;
     try (Connection con = DbConnection.getDatabaseConnection()) {
@@ -58,7 +57,7 @@ public boolean addNewStudent(Student student) throws DAOException {
   }
 
   @Override
-public boolean validateStudentForLogin(Student student) throws DAOException {
+  public boolean validateStudentForLogin(Student student) throws DAOException {
     LOGGER.trace("Executing validateStudentForLogin");
     boolean b = false;
     try (Connection con = DbConnection.getDatabaseConnection()) {
@@ -66,12 +65,12 @@ public boolean validateStudentForLogin(Student student) throws DAOException {
       PreparedStatement pst = null;
       if (student.getUserID() != null) {
         pst = con.prepareStatement("select * from Student " + "where userID = ? and"
-        + " studentPassword = ?");
+            + " studentPassword = ?");
         pst.setString(1, student.getUserID());
         pst.setString(2, student.getStudentPassword());
       }
       ResultSet rs = pst.executeQuery();
-      if (rs.isBeforeFirst()) { // record was found
+      if (rs.next()) { // record was found
         LOGGER.info("Student Credentials verified!");
         b = true;
       } else {
@@ -84,7 +83,7 @@ public boolean validateStudentForLogin(Student student) throws DAOException {
   }
 
   @Override
-public List<Student> viewAllStudentsUsingMapperClass() throws DAOException {
+  public List<Student> viewAllStudentsUsingMapperClass() throws DAOException {
     LOGGER.trace("Executing viewAllStudentsUsingMapperClass");
     List<Student> lstStudent = new ArrayList<>();
     try (Connection con = DbConnection.getDatabaseConnection()) {
@@ -107,7 +106,7 @@ public List<Student> viewAllStudentsUsingMapperClass() throws DAOException {
   }
 
   @Override
-public boolean updateStudentRecord(Student student) throws DAOException {
+  public boolean updateStudentRecord(Student student) throws DAOException {
     LOGGER.trace("Executing updateStudentRecord");
     boolean b = false;
     try (Connection con = DbConnection.getDatabaseConnection()) {
@@ -137,7 +136,7 @@ public boolean updateStudentRecord(Student student) throws DAOException {
   }
 
   @Override
-public List<Student> viewStudentProfile(int instituteid) throws DAOException {
+  public List<Student> viewStudentProfile(int instituteid) throws DAOException {
     List<Student> lstStudent = new ArrayList<>();
     try (Connection con = DbConnection.getDatabaseConnection()) {
       PreparedStatement pst = con.prepareStatement("select * from course c, institute i, "
@@ -152,7 +151,7 @@ public List<Student> viewStudentProfile(int instituteid) throws DAOException {
           Student student = mapper.mapStudentInsRecord(rs);
           lstStudent.add(student);
         }
-      } else { 
+      } else {
         LOGGER.info("No Records in student table");
       }
     } catch (SQLException e) {
@@ -163,7 +162,7 @@ public List<Student> viewStudentProfile(int instituteid) throws DAOException {
   }
 
   @Override
-public List<Student> viewStudentProfile(String userid) throws DAOException {
+  public List<Student> viewStudentProfile(String userid) throws DAOException {
     List<Student> lstStudent = new ArrayList<>();
     try (Connection con = DbConnection.getDatabaseConnection()) {
       PreparedStatement pst = con.prepareStatement("select * from student where userid = ?");
@@ -176,7 +175,7 @@ public List<Student> viewStudentProfile(String userid) throws DAOException {
           Student student = mapper.mapStudentRecord(rs);
           lstStudent.add(student);
         }
-      } else { 
+      } else {
         LOGGER.info("No Records in student table");
       }
     } catch (SQLException e) {
