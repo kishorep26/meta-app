@@ -3,6 +3,7 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+	<!--
 	<servlet>
 		<servlet-name>GetInstituteCookie</servlet-name>
 		<display-name>GetInstituteCookie</display-name>
@@ -23,5 +24,6 @@
 		<servlet-name>SetInstituteCookie</servlet-name>
 		<url-pattern>/SetInstituteCookie</url-pattern>
 	</servlet-mapping>
+	-->
 	
 </web-app>

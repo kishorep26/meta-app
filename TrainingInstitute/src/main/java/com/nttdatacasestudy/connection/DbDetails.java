@@ -8,9 +8,8 @@ package com.nttdatacasestudy.connection;
  * @version 1.2
  */
 public interface DbDetails {
-
-  String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
-  String USER_NAME = "root";
-  String PASSWORD = "root";
-  String CONSTR = "jdbc:mysql://localhost:3306/training_institution?useSSL=false";
+    String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
+    String USER_NAME = System.getenv("DB_USER");
+    String PASSWORD = System.getenv("DB_PASS");
+    String CONSTR = System.getenv("DB_URL");
 }
