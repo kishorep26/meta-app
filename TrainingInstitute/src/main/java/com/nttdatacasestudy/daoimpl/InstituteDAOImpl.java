@@ -89,30 +89,27 @@ public class InstituteDAOImpl implements InstituteDAO {
   }
 
   @Override
-public List<Institute> viewAllInstitutesUsingMapperClass() throws DAOException {
+  public List<Institute> viewAllInstitutesUsingMapperClass() throws DAOException {
     LOGGER.trace("Executing viewAllInstitutesUsingMapperClass");
     List<Institute> lstInstitute = new ArrayList<>();
     try (Connection con = DbConnection.getDatabaseConnection()) {
       PreparedStatement pst = con.prepareStatement("select * from institute");
       ResultSet rs = pst.executeQuery();
       InstituteRecordMapperImpl mapper = new InstituteRecordMapperImpl();
-      if (rs.next()) { 
+      if (rs.next()) {
         LOGGER.info("Displaying Institute Details");
         do {
           Institute institute = mapper.mapInstituteRecord(rs);
           lstInstitute.add(institute);
         } while (rs.next());
-      }
-      } else { 
+      } else {
         LOGGER.info("No Records in institution table");
       }
-    }catch(
-
-  SQLException e)
-  {
-    LOGGER.error(e.getMessage());
-    System.out.println("ERROR! Check Logs");
-  }return lstInstitute;
+    } catch (SQLException e) {
+      LOGGER.error(e.getMessage());
+      System.out.println("ERROR! Check Logs");
+    }
+    return lstInstitute;
   }
 
   @Override
@@ -170,30 +167,27 @@ public List<Institute> viewAllInstitutesUsingMapperClass() throws DAOException {
   }
 
   @Override
-public List<Institute> viewInstituteProfile(int instituteid) throws DAOException {
+  public List<Institute> viewInstituteProfile(int instituteid) throws DAOException {
     List<Institute> lstInstitute = new ArrayList<>();
     try (Connection con = DbConnection.getDatabaseConnection()) {
       PreparedStatement pst = con.prepareStatement("select * from institute where instituteid = ?");
       pst.setInt(1, instituteid);
       ResultSet rs = pst.executeQuery();
       InstituteRecordMapperImpl mapper = new InstituteRecordMapperImpl();
-      if (rs.next()) { 
+      if (rs.next()) {
         LOGGER.info("Displaying Institute Details");
         do {
           Institute institute = mapper.mapInstituteRecord(rs);
           lstInstitute.add(institute);
         } while (rs.next());
-      }
-      } else { 
+      } else {
         LOGGER.info("No Records in institution table");
       }
-    }catch(
-
-  SQLException e)
-  {
+    } catch (SQLException e) {
       LOGGER.error(e.getMessage());
       System.out.println("ERROR! Check Logs");
-    }return lstInstitute;
-}
+    }
+    return lstInstitute;
+  }
 
 }
