@@ -1,5 +1,12 @@
+target/
+*.class
 .DS_Store
-.vscode/
-*.zip
-TrainingInstitute.zip
-Final Case Study(NTT)-20251108T030722Z-1-001.zip
+.env
+.settings/
+.classpath
+.project
+*.log
+**/*.log
+tmp/
+temp/
+*.war
