@@ -54,26 +54,27 @@
                             <% } %>
                 </div>
 
-                <div class="status <%= (DbDetails.CONSTR != null) ? " success" : "error" %>">
-                    DB_URL (JDBC): <%= (DbDetails.CONSTR !=null) ? "✓ Converted" : "✗ CONVERSION FAILED" %>
-                        <% if (DbDetails.CONSTR !=null) { %>
-                            <pre><%= DbDetails.CONSTR %></pre>
+                <div class="status <%= (DbDetails.getJdbcUrl() != null) ? " success" : "error" %>">
+                    DB_URL (JDBC): <%= (DbDetails.getJdbcUrl() !=null) ? "✓ Converted" : "✗ CONVERSION FAILED" %>
+                        <% if (DbDetails.getJdbcUrl() !=null) { %>
+                            <pre><%= DbDetails.getJdbcUrl() %></pre>
                             <% } %>
                 </div>
 
-                <div class="status <%= (DbDetails.USER_NAME != null) ? " success" : "error" %>">
-                    DB_USER: <%= (DbDetails.USER_NAME !=null) ? "✓ Set (" + DbDetails.USER_NAME + ")" : "✗ NOT SET" %>
+                <div class="status <%= (DbDetails.getUserName() != null) ? " success" : "error" %>">
+                    DB_USER: <%= (DbDetails.getUserName() !=null) ? "✓ Set (" + DbDetails.getUserName() + ")"
+                        : "✗ NOT SET" %>
                 </div>
 
-                <div class="status <%= (DbDetails.PASSWORD != null) ? " success" : "error" %>">
-                    DB_PASS: <%= (DbDetails.PASSWORD !=null) ? "✓ Set (length: " + DbDetails.PASSWORD.length() + ")"
-                        : "✗ NOT SET" %>
+                <div class="status <%= (DbDetails.getPassword() != null) ? " success" : "error" %>">
+                    DB_PASS: <%= (DbDetails.getPassword() !=null) ? "✓ Set (length: " + DbDetails.getPassword().length()
+                        + ")" : "✗ NOT SET" %>
                 </div>
 
                 <h2>Database Connection Test:</h2>
                 <% Connection conn=null; String status="" ; String errorMsg="" ; try {
-                    Class.forName(DbDetails.DRIVER_NAME); conn=DriverManager.getConnection(DbDetails.CONSTR,
-                    DbDetails.USER_NAME, DbDetails.PASSWORD); status="success" ; // Test query Statement
+                    Class.forName(DbDetails.DRIVER_NAME); conn=DriverManager.getConnection(DbDetails.getJdbcUrl(),
+                    DbDetails.getUserName(), DbDetails.getPassword()); status="success" ; // Test query Statement
                     stmt=conn.createStatement(); ResultSet rs=stmt.executeQuery("SELECT COUNT(*) as count FROM
                     student"); if (rs.next()) { int studentCount=rs.getInt("count");
                     errorMsg="Connected successfully! Found " + studentCount + " students in database." ; } rs.close();

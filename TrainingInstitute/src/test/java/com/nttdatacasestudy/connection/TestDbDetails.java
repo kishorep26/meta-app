@@ -12,10 +12,10 @@ public class TestDbDetails {
         String jdbcUrl = DbDetails.getJdbcUrl();
         System.out.println("Original URL: " + System.getenv("DB_URL"));
         System.out.println("Converted JDBC URL: " + jdbcUrl);
-        System.out.println("DB User: " + DbDetails.USER_NAME);
-        System.out.println("DB Pass: " + (DbDetails.PASSWORD != null
-                ? "***" + DbDetails.PASSWORD.substring(Math.max(0, DbDetails.PASSWORD.length() - 4))
-                : "null"));
+        System.out.println("DB User: " + DbDetails.getUserName());
+        String pass = DbDetails.getPassword();
+        System.out.println(
+                "DB Pass: " + (pass != null ? "***" + pass.substring(Math.max(0, pass.length() - 4)) : "null"));
 
         // Expected:
         // jdbc:mysql://gateway01.us-east-1.prod.aws.tidbcloud.com:4000/test?useSSL=true&serverTimezone=UTC

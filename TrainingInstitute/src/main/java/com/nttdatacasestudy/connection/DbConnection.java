@@ -22,10 +22,10 @@ public class DbConnection {
   public static Connection getDatabaseConnection() {
     Connection con = null;
     try {
-      // Log environment variable status for debugging
-      String dbUrl = DbDetails.CONSTR;
-      String dbUser = DbDetails.USER_NAME;
-      String dbPass = DbDetails.PASSWORD;
+      // Get values at runtime
+      String dbUrl = DbDetails.getJdbcUrl();
+      String dbUser = DbDetails.getUserName();
+      String dbPass = DbDetails.getPassword();
 
       if (dbUrl == null || dbUrl.isEmpty()) {
         throw new RuntimeException("DB_URL environment variable is not set!");

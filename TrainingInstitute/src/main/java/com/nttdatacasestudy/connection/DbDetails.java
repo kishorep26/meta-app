@@ -1,7 +1,7 @@
 package com.nttdatacasestudy.connection;
 
 /**
- * Interface DbDetails is created get the database details.
+ * DbDetails class for database connection details.
  *
  * @author TrainingInstitute
  * @since 2021-10-08
@@ -9,8 +9,15 @@ package com.nttdatacasestudy.connection;
  */
 public class DbDetails {
     public static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
-    public static final String USER_NAME = System.getenv("DB_USER");
-    public static final String PASSWORD = System.getenv("DB_PASS");
+
+    // Get environment variables directly - no static initialization
+    public static String getUserName() {
+        return System.getenv("DB_USER");
+    }
+
+    public static String getPassword() {
+        return System.getenv("DB_PASS");
+    }
 
     // Convert TiDB URL format to JDBC format
     public static String getJdbcUrl() {
@@ -41,6 +48,4 @@ public class DbDetails {
         // Fallback: assume it's already in correct format
         return rawUrl;
     }
-
-    public static final String CONSTR = getJdbcUrl();
 }
