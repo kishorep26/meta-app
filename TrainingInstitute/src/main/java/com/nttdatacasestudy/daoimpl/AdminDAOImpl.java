@@ -31,7 +31,7 @@ public class AdminDAOImpl implements AdminDAO {
       PreparedStatement pst = null;
       if (admin.getAdminID() != null) {
         LOGGER.info("Admin Credentials Verified!");
-        pst = con.prepareStatement("select * from Admin " + "where adminID = ? " + "and "
+        pst = con.prepareStatement("select * from admin " + "where adminID = ? " + "and "
             + "adminPassword = ?");
         pst.setString(1, admin.getAdminID());
         pst.setString(2, admin.getAdminPassword());

@@ -7,15 +7,13 @@ package com.nttdatacasestudy.connection;
  * @since 2021-10-08
  * @version 1.2
  */
-public interface DbDetails {
-    String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
-    String USER_NAME = System.getenv("DB_USER");
-    String PASSWORD = System.getenv("DB_PASS");
+public class DbDetails {
+    public static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
+    public static final String USER_NAME = System.getenv("DB_USER");
+    public static final String PASSWORD = System.getenv("DB_PASS");
 
     // Convert TiDB URL format to JDBC format
-    // TiDB gives: mysql://user:pass@host:port/db
-    // JDBC needs: jdbc:mysql://host:port/db
-    static String getJdbcUrl() {
+    public static String getJdbcUrl() {
         String rawUrl = System.getenv("DB_URL");
         if (rawUrl == null || rawUrl.isEmpty()) {
             return null;
@@ -44,5 +42,5 @@ public interface DbDetails {
         return rawUrl;
     }
 
-    String CONSTR = getJdbcUrl();
+    public static final String CONSTR = getJdbcUrl();
 }

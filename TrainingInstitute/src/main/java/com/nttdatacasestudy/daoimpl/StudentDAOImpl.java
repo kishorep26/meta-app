@@ -64,7 +64,7 @@ public class StudentDAOImpl implements StudentDAO {
 
       PreparedStatement pst = null;
       if (student.getUserID() != null) {
-        pst = con.prepareStatement("select * from Student " + "where userID = ? and"
+        pst = con.prepareStatement("select * from student " + "where userID = ? and"
             + " studentPassword = ?");
         pst.setString(1, student.getUserID());
         pst.setString(2, student.getStudentPassword());
