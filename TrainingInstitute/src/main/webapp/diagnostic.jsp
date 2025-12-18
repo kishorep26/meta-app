@@ -74,7 +74,7 @@
                 <h2>Database Connection Test:</h2>
                 <% Connection conn=null; String status="" ; String errorMsg="" ; try {
                     Class.forName(DbDetails.DRIVER_NAME); conn=DriverManager.getConnection(DbDetails.getJdbcUrl(),
-                    DbDetails.getUserName(), DbDetails.getPassword()); status="success" ; // Test query Statement
+                    DbDetails.getUserName(), DbDetails.getPassword()); status="success" ; Statement
                     stmt=conn.createStatement(); ResultSet rs=stmt.executeQuery("SELECT COUNT(*) as count FROM
                     student"); if (rs.next()) { int studentCount=rs.getInt("count");
                     errorMsg="Connected successfully! Found " + studentCount + " students in database." ; } rs.close();
