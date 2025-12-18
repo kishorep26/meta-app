@@ -22,12 +22,42 @@ public class DbConnection {
   public static Connection getDatabaseConnection() {
     Connection con = null;
     try {
+      // Log environment variable status for debugging
+      String dbUrl = DbDetails.CONSTR;
+      String dbUser = DbDetails.USER_NAME;
+      String dbPass = DbDetails.PASSWORD;
+
+      if (dbUrl == null || dbUrl.isEmpty()) {
+        throw new RuntimeException("DB_URL environment variable is not set!");
+      }
+      if (dbUser == null || dbUser.isEmpty()) {
+        throw new RuntimeException("DB_USER environment variable is not set!");
+      }
+      if (dbPass == null || dbPass.isEmpty()) {
+        throw new RuntimeException("DB_PASS environment variable is not set!");
+      }
+
+      System.out.println("Attempting to connect to database...");
+      System.out.println("DB_URL: " + dbUrl.replaceAll(":[^:@]+@", ":****@")); // Hide password in logs
+      System.out.println("DB_USER: " + dbUser);
+
       Class.forName(DbDetails.DRIVER_NAME);
-      con = DriverManager.getConnection(DbDetails.CONSTR, DbDetails.USER_NAME,
-          DbDetails.PASSWORD);
-    } catch (ClassNotFoundException | SQLException ex) {
+      con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+
+      System.out.println("Database connection successful!");
+
+    } catch (ClassNotFoundException ex) {
+      System.err.println("MySQL Driver not found: " + ex.getMessage());
+      ex.printStackTrace();
+      throw new RuntimeException("Failed to load MySQL driver: " + ex.getMessage(), ex);
+    } catch (SQLException ex) {
+      System.err.println("Database connection failed: " + ex.getMessage());
       ex.printStackTrace();
       throw new RuntimeException("Failed to connect to database: " + ex.getMessage(), ex);
+    } catch (RuntimeException ex) {
+      System.err.println("Configuration error: " + ex.getMessage());
+      ex.printStackTrace();
+      throw ex;
     }
     return con;
   }

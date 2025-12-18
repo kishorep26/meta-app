@@ -47,10 +47,17 @@
                 <h1>Environment & Database Diagnostic</h1>
 
                 <h2>Environment Variables:</h2>
+                <div class="status <%= (System.getenv(" DB_URL") !=null) ? "success" : "error" %>">
+                    DB_URL (Raw): <%= (System.getenv("DB_URL") !=null) ? "✓ Set" : "✗ NOT SET" %>
+                        <% if (System.getenv("DB_URL") !=null) { %>
+                            <pre><%= System.getenv("DB_URL").replaceAll(":[^:@]+@", ":****@") %></pre>
+                            <% } %>
+                </div>
+
                 <div class="status <%= (DbDetails.CONSTR != null) ? " success" : "error" %>">
-                    DB_URL: <%= (DbDetails.CONSTR !=null) ? "✓ Set" : "✗ NOT SET" %>
+                    DB_URL (JDBC): <%= (DbDetails.CONSTR !=null) ? "✓ Converted" : "✗ CONVERSION FAILED" %>
                         <% if (DbDetails.CONSTR !=null) { %>
-                            <pre><%= DbDetails.CONSTR.replaceAll(":[^:@]+@", ":****@") %></pre>
+                            <pre><%= DbDetails.CONSTR %></pre>
                             <% } %>
                 </div>
 
